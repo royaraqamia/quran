@@ -1,0 +1,57 @@
+name: Code Quality
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+# Superseded runs on the same ref are cancelled.
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+jobs:
+  quality:
+    name: Format, lint, types, tests, build
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    env:
+      NEXT_TELEMETRY_DISABLED: "1"
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Check formatting
+        run: npm run format:check
+
+      - name: Lint
+        run: npm run lint
+
+      - name: Typecheck
+        run: npm run typecheck
+
+      # Non-blocking while the suite is empty. Remove `continue-on-error`
+      # to make tests a required gate.
+      - name: Test
+        run: npm test
+        continue-on-error: true
+
+      - name: Build
+        run: npm run build
+
+      # Report-only: `braces` is vendored locally, so advisories may surface.
+      - name: Audit dependencies
+        run: npm audit --audit-level=high
+        continue-on-error: true

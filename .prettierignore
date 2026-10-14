@@ -1,0 +1,19 @@
+# Dependencies
+node_modules
+
+# Next.js build output
+.next
+out
+build
+
+# Vendored third-party code, patched but not ours to format.
+# See vendor/braces/PATCHES.md
+vendor
+
+# Generated / machine-managed files
+package-lock.json
+skills-lock.json
+tsconfig.tsbuildinfo
+next-env.d.ts
+components.json
+*.ico
