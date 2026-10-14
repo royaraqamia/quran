@@ -12,6 +12,9 @@ const eslintConfig = defineConfig([
     "out/**",
     "build/**",
     "next-env.d.ts",
+    // Third-party code vendored to patch CVE-2026-93687 in `braces`.
+    // See vendor/braces/PATCHES.md. Not ours to lint or refactor.
+    "vendor/**",
   ]),
 ]);
 
