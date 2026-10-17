@@ -28,6 +28,7 @@
     "@types/node": "^24.19.2",
     "@types/react": "^19",
     "@types/react-dom": "^19",
+    "braces": "file:./vendor/braces",
     "eslint": "^9",
     "eslint-config-next": "16.4.0",
     "fill-range": "^7.1.1",
@@ -41,8 +42,5 @@
   },
   "allowScripts": {
     "unrs-resolver@1.12.2": true
-  },
-  "overrides": {
-    "braces": "file:./vendor/braces"
   }
 }
